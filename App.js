@@ -1,87 +1,3 @@
-// /**
-//  * Sample React Native App
-//  * https://github.com/facebook/react-native
-//  *
-//  * @format
-//  * @flow
-//  */
-
-// import React, {Component} from 'react';
-// import {
-//   SafeAreaView,
-//   StyleSheet,
-//   ScrollView,
-//   View,
-//   Text,
-//   StatusBar,
-//   TouchableOpacity,
-//   Dimensions
-// } from 'react-native';
-// import {connect} from 'react-redux';
-// import * as ActionCreator from './redux/actions/Actions';
-// // import {store} from './redux/Store';
-
-// const SCREEN_HEIGHT = Dimensions.get('window').height;
-// const SCREEN_WIDTH = Dimensions.get('window').width;
-
-// class App extends Component {
-//   constructor(props){
-//     super(props)
-//     this.state = {
-
-//     }
-//   }
-
-//   onPressAdd() {
-//     let num = this.props.numValue + 1;
-//     console.log("Inside onPressAdd method:...", num)
-//     this.props.onAdd(num);
-//   }
-
-//   onPressSub() {
-//     if(this.props.numValue > 0){
-//       let num = this.props.numValue - 1;
-//       this.props.onSub(num);
-//     } else {
-//       this.props.onSub(this.props.numValue);
-//     }
-//   }
-
-//   render() {
-//     return (      
-//       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-//         <View style={{flexDirection: 'row', width: SCREEN_WIDTH, justifyContent: 'space-around'}}>
-//           <TouchableOpacity onPress={()=>{this.onPressAdd()}} style={{width: 80, height: 40, borderRadius: 5, backgroundColor: '#45B39D', justifyContent: 'center', alignItems: 'center'}}><Text style={{fontWeight: 'bold', textAlign: 'center', fontSize: 16, color: '#ffffff'}}>ADD</Text></TouchableOpacity>
-//           <View style={{width: 90, justifyContent: 'center', alignItems: 'center'}}><Text style={{fontSize: 16, fontWeight: 'bold', textAlign: 'center'}}>{this.props.numValue}</Text></View>
-//           <TouchableOpacity onPress={()=>{this.onPressSub()}} style={{width: 80, height: 40, borderRadius: 5, backgroundColor: '#F39C12', justifyContent: 'center', alignItems: 'center'}}><Text style={{fontWeight: 'bold', textAlign: 'center', fontSize: 16, color: '#ffffff'}}>SUB</Text></TouchableOpacity>
-//         </View>
-//       </View>
-
-//     )
-//   }
-// }
-
-
-// const styles = StyleSheet.create({
-
-// });
-
-// const mapStateToProps = function(state) {
-//   console.log(state);  
-//   return {numValue : state.numValue}
-// }
-
-// const mapDispachToProps = dispatch => {
-//   return {
-//     onAdd: (num) => dispatch(ActionCreator.addVal(num)),
-//     onSub: (num) => dispatch(ActionCreator.subVal(num))
-//   };
-// };
-
-// export default connect(mapStateToProps, mapDispachToProps)(App);
-
-// // export default App
-
 /**
  * Sample React Native App
  * https://github.com/facebook/react-native
@@ -132,15 +48,15 @@ class App extends Component {
   onSubmitStudent(){
     let obj = {name: this.state.name, city: this.state.city, pin: this.state.pincode, mobile: this.state.mobile};
     console.log("Value of arrIndex: ", this.state.arrIndex);
-    if(this.state.arrIndex !== "") {      
+    if(this.state.arrIndex !== "") { //如果在该方法中去修改其他componet的state需要使用this.props.在dispatch中的方法
       this.props.onUpdate(obj, this.state.arrIndex)
       this.setState({arrIndex: "", addStudent: true, name: "", city: "", pincode: "", mobile: ""});
 
-    } else {      
+    } else {
       this.props.onCreate(obj);
       this.setState({arrIndex: "", addStudent: true, name: "", city: "", pincode: "", mobile: ""});
     }
-    
+
     // this.setState({addStudent: true})
   }
 
@@ -193,12 +109,13 @@ class App extends Component {
               renderItem={row => this.renderStudent(row)}
               extraData={this.props.studentArr}
               enableEmptySections={true}
-              scrollEnabled={true} 
-              ListEmptyComponent={<View style={{marginTop: 20}}><Text style={{textAlign: 'center'}}>No Data Available</Text></View>}             
+              scrollEnabled={true}
+              ListEmptyComponent={<View style={{marginTop: 20}}><Text style={{textAlign: 'center'}}>No Data Available</Text></View>}
             />
             : null}
             <View style={{height: 70}}></View>
             <TouchableOpacity onPress={()=>{this.onAddNewStudent()}} style={{ width: 130, height: 40, position: 'absolute', bottom: 12, backgroundColor: '#ffffff', borderRadius: 8, alignSelf: 'center', justifyContent: 'center', alignItems: 'center' }}><Text style={{ fontWeight: 'bold', fontSize: 14, textAlign: 'center', color: 'gray' }}>Add New Student</Text></TouchableOpacity>
+            <TouchableOpacity onPress={()=>{this.props.navigation.navigate("ExampleApp")}} style={{ width: 130, height: 40, position: 'absolute', bottom: 12, backgroundColor: '#ffffff', borderRadius: 8, alignSelf: 'center', justifyContent: 'center', alignItems: 'center' }}><Text style={{ fontWeight: 'bold', fontSize: 14, textAlign: 'center', color: 'gray' }}>Nav to myScreen</Text></TouchableOpacity>
           </View>
           :
           <View style={{ height: SCREEN_HEIGHT/1.5, width: SCREEN_WIDTH - 30, paddingTop :30, borderRadius: 10, elevation: 2, backgroundColor: '#ffffff' }}>
